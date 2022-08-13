@@ -9,82 +9,291 @@
 
 5. The dealer has to hit if their hand is below 17.
 
-6. Each players' score is the total of their card ranks. Jacks/Queen/Kings are 10. Aces can be 1 or 11.
+6. Each player's score is the total of their card ranks. Jacks/Queen/Kings are 10. Aces can be 1 or 11.
 
-7. The player who is closer to, but not above 21 wins the hand.
+7. The player who is closer to, but not above 21, wins the hand.
 
 */
 
-/*
-// Access the rank attribute
-playingCard.rank;
-// Access the suit attribute
-playingCard.suit;
-// Access the name attribute
-playingCard.name;
-*/
+// Declare game modes
+var inputUserName = "input username";
+var drawCards = "draw cards";
+var showResults = "show results";
+var hitOrStand = "hit or stand";
+var gameResults = "game results";
+var gameMode = inputUserName;
 
 var cardDeck = [];
 var playerHand = [];
 var dealerHand = [];
 
-// Full deck of cards
-var createDeck = function () {
-  // Initialise an empty deck array
-  var cardDeck = [];
-  // Initialise an array of the 4 suits in our deck. We will loop over this array.
-  var suits = ["hearts", "diamonds", "clubs", "spades"];
+// Function that creates a deck of cards, used by createNewDeck function
+var createDeck = [
+  {
+    name: "ace",
+    suit: "hearts",
+    rank: 1,
+  },
+  {
+    name: "2",
+    suit: "hearts",
+    rank: 2,
+  },
+  {
+    name: "3",
+    suit: "hearts",
+    rank: 3,
+  },
+  {
+    name: "4",
+    suit: "hearts",
+    rank: 4,
+  },
+  {
+    name: "5",
+    suit: "hearts",
+    rank: 5,
+  },
+  {
+    name: "6",
+    suit: "hearts",
+    rank: 6,
+  },
+  {
+    name: "7",
+    suit: "hearts",
+    rank: 7,
+  },
+  {
+    name: "8",
+    suit: "hearts",
+    rank: 8,
+  },
+  {
+    name: "9",
+    suit: "hearts",
+    rank: 9,
+  },
+  {
+    name: "10",
+    suit: "hearts",
+    rank: 10,
+  },
+  {
+    name: "jack",
+    suit: "hearts",
+    rank: 11,
+  },
+  {
+    name: "queen",
+    suit: "hearts",
+    rank: 12,
+  },
+  {
+    name: "king",
+    suit: "hearts",
+    rank: 13,
+  },
+  {
+    name: "ace",
+    suit: "diamonds",
+    rank: 1,
+  },
+  {
+    name: "2",
+    suit: "diamonds",
+    rank: 2,
+  },
+  {
+    name: "3",
+    suit: "diamonds",
+    rank: 3,
+  },
+  {
+    name: "4",
+    suit: "diamonds",
+    rank: 4,
+  },
+  {
+    name: "5",
+    suit: "diamonds",
+    rank: 5,
+  },
+  {
+    name: "6",
+    suit: "diamonds",
+    rank: 6,
+  },
+  {
+    name: "7",
+    suit: "diamonds",
+    rank: 7,
+  },
+  {
+    name: "8",
+    suit: "diamonds",
+    rank: 8,
+  },
+  {
+    name: "9",
+    suit: "diamonds",
+    rank: 9,
+  },
+  {
+    name: "10",
+    suit: "diamonds",
+    rank: 10,
+  },
+  {
+    name: "jack",
+    suit: "diamonds",
+    rank: 11,
+  },
+  {
+    name: "queen",
+    suit: "diamonds",
+    rank: 12,
+  },
+  {
+    name: "king",
+    suit: "diamonds",
+    rank: 13,
+  },
+  {
+    name: "ace",
+    suit: "clubs",
+    rank: 1,
+  },
+  {
+    name: "2",
+    suit: "clubs",
+    rank: 2,
+  },
+  {
+    name: "3",
+    suit: "clubs",
+    rank: 3,
+  },
+  {
+    name: "4",
+    suit: "clubs",
+    rank: 4,
+  },
+  {
+    name: "5",
+    suit: "clubs",
+    rank: 5,
+  },
+  {
+    name: "6",
+    suit: "clubs",
+    rank: 6,
+  },
+  {
+    name: "7",
+    suit: "clubs",
+    rank: 7,
+  },
+  {
+    name: "8",
+    suit: "clubs",
+    rank: 8,
+  },
+  {
+    name: "9",
+    suit: "clubs",
+    rank: 9,
+  },
+  {
+    name: "10",
+    suit: "clubs",
+    rank: 10,
+  },
+  {
+    name: "jack",
+    suit: "clubs",
+    rank: 11,
+  },
+  {
+    name: "queen",
+    suit: "clubs",
+    rank: 12,
+  },
+  {
+    name: "king",
+    suit: "clubs",
+    rank: 13,
+  },
+  {
+    name: "ace",
+    suit: "spades",
+    rank: 1,
+  },
+  {
+    name: "2",
+    suit: "spades",
+    rank: 2,
+  },
+  {
+    name: "3",
+    suit: "spades",
+    rank: 3,
+  },
+  {
+    name: "4",
+    suit: "spades",
+    rank: 4,
+  },
+  {
+    name: "5",
+    suit: "spades",
+    rank: 5,
+  },
+  {
+    name: "6",
+    suit: "spades",
+    rank: 6,
+  },
+  {
+    name: "7",
+    suit: "spades",
+    rank: 7,
+  },
+  {
+    name: "8",
+    suit: "spades",
+    rank: 8,
+  },
+  {
+    name: "9",
+    suit: "spades",
+    rank: 9,
+  },
+  {
+    name: "10",
+    suit: "spades",
+    rank: 10,
+  },
+  {
+    name: "jack",
+    suit: "spades",
+    rank: 11,
+  },
+  {
+    name: "queen",
+    suit: "spades",
+    rank: 12,
+  },
+  {
+    name: "king",
+    suit: "spades",
+    rank: 13,
+  },
+];
 
-  // Loop over the suits array
-  var suitIndex = 0;
-  while (suitIndex < suits.length) {
-    // Store the current suit in a variable
-    var currentSuit = suits[suitIndex];
-
-    // Loop from 1 to 13 to create all cards for a given suit
-    // Notice rankCounter starts at 1 and not 0, and ends at 13 and not 12.
-    // This is an example of a loop without an array.
-    var rankCounter = 1;
-    while (rankCounter <= 13) {
-      // By default, the card name is the same as rankCounter
-      var cardName = rankCounter;
-
-      // If rank is 1, 11, 12, or 13, set cardName to the ace or face card's name
-      if (cardName == 1) {
-        cardName = "ace";
-      } else if (cardName == 11) {
-        cardName = "jack";
-      } else if (cardName == 12) {
-        cardName = "queen";
-      } else if (cardName == 13) {
-        cardName = "king";
-      }
-
-      // Create a new card with the current name, suit, and rank
-      var card = {
-        name: cardName,
-        suit: currentSuit,
-        rank: rankCounter,
-      };
-
-      // Add the new card to the deck
-      cardDeck.push(card);
-
-      // Increment rankCounter to iterate over the next rank
-      rankCounter += 1;
-    }
-
-    // Increment the suit index to iterate over the next suit
-    suitIndex += 1;
-  }
-
-  // Return the completed card deck
-  return cardDeck;
-};
-
-// Get a random index ranging from 0 (inclusive) to max (exclusive).
-var getRandomIndex = function (max) {
-  return Math.floor(Math.random() * max);
+// Function that generates a random number, used by shuffle deck function
+var getRandomIndex = function (size) {
+  return Math.floor(Math.random() * size);
 };
 
 // Function that shuffles a deck, used by createNewDeck function
@@ -103,29 +312,38 @@ var shuffleDeck = function (cards) {
 
 // Function that creates and shuffles a deck
 var createNewDeck = function () {
-  var newDeck = createDeck();
-  var shuffledDeck = shuffleDeck(newDeck);
+  var shuffledDeck = shuffleDeck(createDeck);
   return shuffledDeck;
 };
 
 // Displays cards drawn by player and dealer (name and suit)
 var displayHands = function (playerHand, dealerHand) {
+  var playerHandValue = calcHandValues(playerHand);
+  var dealerHandValue = calcHandValues(dealerHand);
+
+  var playerMessage = `<u><b>Your hand (${playerHandValue}):</b></u><br>`;
   var index = 0;
   while (index < playerHand.length) {
-    var playerMessage = `${playerHand[index].name} of ${playerHand[index].suit}`;
+    playerMessage =
+      playerMessage +
+      `${playerHand[index].name} of ${playerHand[index].suit}<br>`;
     index += 1;
   }
   var index = 0;
+  var dealerMessage = `<u><b>Dealer hand (${dealerHandValue}):</b></u><br>`;
   while (index < dealerHand.length) {
-    var dealerMessage = `${dealerHand[index].name} of ${dealerHand[index].suit}`;
+    dealerMessage =
+      dealerMessage +
+      `${dealerHand[index].name} of ${dealerHand[index].suit}<br>`;
     index += 1;
   }
-  return `Player hand: ${playerMessage} <br> Dealer hand: ${dealerMessage}`;
+  return `${playerMessage} <br> ${dealerMessage}`;
 };
 
 // Calculate hand values
 var calcHandValues = function (hand) {
   var totalHandValue = 0;
+  var aceCounter = 0;
   var index = 0;
 
   while (index < hand.length) {
@@ -138,46 +356,241 @@ var calcHandValues = function (hand) {
       totalHandValue = totalHandValue + 10;
     } else if (currentCard.name == "ace") {
       totalHandValue = totalHandValue + 11;
+      aceCounter += 1;
     } else {
       totalHandValue = totalHandValue + currentCard.rank;
     }
     index += 1;
   }
+
+  index = 0;
+  while (index < aceCounter) {
+    if (totalHandValue > 21) {
+      totalHandValue = totalHandValue - 10;
+    }
+    index += 1;
+  }
+
   return totalHandValue;
 };
 
+// Checks first two cards for blackjack
+var checkBlackJack = function (hand) {
+  var firstCard = hand[0];
+  var secondCard = hand[1];
+
+  // blackjack when ace (11) + 10/king/queen/jack (10)
+  if (
+    (firstCard.name == "ace" && secondCard.rank >= 10) ||
+    (secondCard.name == "ace" && firstCard.rank >= 10)
+  ) {
+    var isBlackJack = true;
+  } else isBlackJack = false;
+
+  return isBlackJack;
+};
+
 var main = function (input) {
+  var myOutputValue = ``;
+
   var shuffledDeck = createNewDeck();
 
-  // Draw 2 cards from the top of the deck
-  playerHand.push(shuffledDeck.pop());
-  dealerHand.push(shuffledDeck.pop());
-  playerHand.push(shuffledDeck.pop());
-  dealerHand.push(shuffledDeck.pop());
+  // Mode 1: Input username
+  if (gameMode == inputUserName) {
+    // Update game mode to Mode 2: Draw cards
 
-  // Construct an output string to communicate which cards were drawn
-  // var myOutputValue = `Computer had ${computerCard1.name} of ${computerCard1.suit} and ${computerCard2.name} of ${computerCard2.suit}. <br> Player had ${playerCard1.name} of ${playerCard1.suit} and ${playerCard2.name} of ${playerCard2.suit}. </br>`;
+    myOutputValue = `Hi <b>${input}</b>! Hope you're ready for a round of Blackjack!<br><br> Click <b>"Submit"</b> to draw your cards.`;
 
-  var playerHandValue = calcHandValues(playerHand);
+    gameMode = drawCards;
 
-  return `${playerHandValue}`;
+    return myOutputValue;
+  }
 
-  // Check for black jack
+  // Mode 2: Draw cards
+  if (gameMode == drawCards) {
+    // Draw cards from the top of the deck
+    playerHand.push(shuffledDeck.pop());
+    dealerHand.push(shuffledDeck.pop());
+    playerHand.push(shuffledDeck.pop());
+    dealerHand.push(shuffledDeck.pop());
+    /*
+    playerHand[0] = {
+      name: "ace",
+      suit: "diamonds",
+      rank: 1,
+    };
 
-  /*
-  // Compare computer and player cards by rank attribute
-  // If computer card rank is greater than player card rank, computer wins
-  if (computerCard.rank > playerCard.rank) {
-    // Add conditional-dependent text to the output string
-    myOutputValue = myOutputValue + "Computer wins.";
-    // Else if computer card rank is less than player card rank, player wins
-  } else if (computerCard.rank < playerCard.rank) {
-    myOutputValue = myOutputValue + "Player wins!";
-    // Otherwise (i.e. ranks are equal), it's a tie
-  } else {
-    myOutputValue = myOutputValue + "It's a tie.";
-  } */
+    playerHand[1] = {
+      name: "king",
+      suit: "hearts",
+      rank: 12,
+    };
 
-  // Return the fully-constructed output string
+    dealerHand[0] = {
+      name: "ace",
+      suit: "hearts",
+      rank: 1,
+    };
+
+    dealerHand[1] = {
+      name: "queen",
+      suit: "diamonds",
+      rank: 11,
+    };
+    */
+
+    myOutputValue = `Your cards have been drawn!<br><br> Click <b>"Submit"</b> to see your results.`;
+
+    // Update game mode to Mode 3: Show results
+    gameMode = showResults;
+
+    return myOutputValue;
+  }
+
+  // Mode 3: Check for Blackjacks; Show results
+  if (gameMode == showResults) {
+    var playerHasBlackJack = checkBlackJack(playerHand);
+    var dealerHasBlackJack = checkBlackJack(dealerHand);
+
+    if (playerHasBlackJack == true || dealerHasBlackJack == true) {
+      outputMsg = displayHands(playerHand, dealerHand);
+
+      // 3 scenarios regarding Blackjack wins
+
+      if (playerHasBlackJack == true && dealerHasBlackJack == true) {
+        outputMsg = outputMsg + "<br>It's a Blackjack tie!";
+      } else if (playerHasBlackJack == true && dealerHasBlackJack == false) {
+        outputMsg = outputMsg + `<br>Congrats! You win by Blackjack! 🥳`;
+        gameMode = gameResults;
+      } else
+        outputMsg =
+          outputMsg +
+          `<br>Dealer wins by Blackjack.<br><br> Better luck next time!`;
+      gameMode = gameResults;
+      return outputMsg;
+    } else {
+      outputMsg = `${displayHands(
+        playerHand,
+        dealerHand
+      )} <br>There are no Blackjacks. <br><br> To continue, please input <b>"hit"</b> or <b>"stand"</b>.`;
+      gameMode = hitOrStand;
+      return outputMsg;
+    }
+  }
+
+  // Mode 4: Hit or Stand
+  if (gameMode == hitOrStand) {
+    // Input validation (either "hit" or "stand")
+    if (!(input == "hit" || input == "stand")) {
+      outputMsg = `Please input either <b>"hit"</b> or <b>"stand"</b>. <br><br> ${displayHands(
+        playerHand,
+        dealerHand
+      )}`;
+      return outputMsg;
+    }
+
+    // If player enters "Hit"
+    if (input == "hit") {
+      playerHand.push(shuffledDeck.pop());
+
+      outputMsg = "You have drawn another card.<br><br>";
+
+      var playerHandValue = calcHandValues(playerHand);
+
+      if (playerHandValue < 21) {
+        outputMsg =
+          outputMsg +
+          displayHands(playerHand, dealerHand) +
+          '<br>Please input <b>"hit"</b> or <b>"stand"</b>.<br><br>';
+      }
+
+      if (playerHandValue == 21) {
+        var dealerHandValue = calcHandValues(dealerHand);
+        // Dealer continues drawing if their hand is below 17
+        while (dealerHandValue < 17) {
+          dealerHand.push(shuffledDeck.pop());
+          dealerHandValue = calcHandValues(dealerHand);
+        }
+        if (dealerHandValue == 21) {
+          outputMsg =
+            outputMsg +
+            displayHands(playerHand, dealerHand) +
+            "<br>It's a Blackjack tie!";
+        } else {
+          outputMsg =
+            outputMsg +
+            displayHands(playerHand, dealerHand) +
+            `<br>Congrats! You win by Blackjack! 🥳`;
+        }
+        gameMode = gameResults;
+      }
+
+      if (playerHandValue > 21) {
+        var dealerHandValue = calcHandValues(dealerHand);
+        // Dealer continues drawing if their hand is below 17
+        while (dealerHandValue < 17) {
+          dealerHand.push(shuffledDeck.pop());
+          dealerHandValue = calcHandValues(dealerHand);
+        }
+
+        if (dealerHandValue > 21) {
+          outputMsg =
+            outputMsg +
+            displayHands(playerHand, dealerHand) +
+            "<br>Both bust - it's a tie!";
+        } else {
+          outputMsg =
+            outputMsg +
+            displayHands(playerHand, dealerHand) +
+            `<br>Oops, it's a bust! 🙈 <br><br>Better luck next time!`;
+        }
+        gameMode = gameResults;
+      }
+    }
+    // If player enters "Stand"
+    else if (input == "stand") {
+      var playerHandValue = calcHandValues(playerHand);
+      var dealerHandValue = calcHandValues(dealerHand);
+      // Dealer continues drawing if their hand is below 17
+      while (dealerHandValue < 17) {
+        dealerHand.push(shuffledDeck.pop());
+        dealerHandValue = calcHandValues(dealerHand);
+      }
+
+      // Calculates if it is a tie (same value or both bust)
+      if (
+        playerHandValue == dealerHandValue ||
+        (playerHandValue > 21 && dealerHandValue > 21)
+      ) {
+        outputMsg = `It's a tie!<br><br>Your hand value: ${playerHandValue}<br>Dealer hand value: ${dealerHandValue}<br><br>${displayHands(
+          playerHand,
+          dealerHand
+        )}`;
+      }
+      // Checks if player or dealer wins
+      else if (
+        (playerHandValue <= 21 && playerHandValue > dealerHandValue) ||
+        (playerHandValue <= 21 && dealerHandValue > 21)
+      ) {
+        outputMsg = `You win! 🎉<br><br>Your hand value: ${playerHandValue}<br>Dealer hand value: ${dealerHandValue}<br><br>${displayHands(
+          playerHand,
+          dealerHand
+        )}`;
+      } else
+        outputMsg = `Sorry, the dealer wins. <br><br>Your hand value: ${playerHandValue}<br>Dealer hand value: ${dealerHandValue}<br><br>${displayHands(
+          playerHand,
+          dealerHand
+        )} <br>Better luck next time!`;
+
+      gameMode = gameResults;
+    }
+
+    return outputMsg;
+  }
+
+  if (gameMode == gameResults) {
+    myOutputValue = `Game END!`;
+  }
+
   return myOutputValue;
 };
