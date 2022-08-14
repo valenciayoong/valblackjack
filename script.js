@@ -389,9 +389,12 @@ var checkBlackJack = function (hand) {
 
 // Function that draws for dealer if needed
 var dealerDrawsIfNeeded = function (dealerHand) {
+
+  var dealerHandValue = calcHandValues(dealerHand); 
+  
   while (dealerHandValue < 17) {
     dealerHand.push(shuffledDeck.pop());
-    dealerHandValue = calcHandValues(dealerHand);
+    dealerHandValue = calcHandValues(dealerHand); 
   }
   return dealerHandValue;
 };
