@@ -1,6 +1,5 @@
 /* 
-This is a simple game of Blackjack.
-Rules:
+This is a Blackjack game. Rules:
 1. There will be only two players. One human and one computer (for the Base solution).
 2. The computer will always be the dealer.
 3. Each player gets dealt two cards to start.
@@ -21,8 +20,6 @@ var gameMode = inputUserName;
 var cardDeck = [];
 var playerHand = [];
 var dealerHand = [];
-var dealerHandValue = 0;
-var playerHandValue = 0;
 
 // Function that creates a deck of cards, used by createNewDeck function
 var createDeck = [
@@ -371,7 +368,7 @@ var calcHandValues = function (hand) {
   return totalHandValue;
 };
 
-// Function that checks first two cards for Blackjack win
+// Function that checks first two cards for Blackjack
 var checkBlackJack = function (hand) {
   var firstCard = hand[0];
   var secondCard = hand[1];
@@ -387,20 +384,9 @@ var checkBlackJack = function (hand) {
   return isBlackJack;
 };
 
-// Function that draws for dealer if needed
-var dealerDrawsIfNeeded = function (dealerHand) {
-  while (dealerHandValue < 17) {
-    dealerHand.push(shuffledDeck.pop());
-    dealerHandValue = calcHandValues(dealerHand);
-  }
-  return dealerHandValue;
-};
-
-// Generate shuffled deck for new game
-var shuffledDeck = createNewDeck();
-
 var main = function (input) {
   var myOutputValue = ``;
+  var shuffledDeck = createNewDeck();
 
   // Mode 1: Input username
   if (gameMode == inputUserName) {
@@ -412,17 +398,17 @@ var main = function (input) {
 
   // Mode 2: Draw cards
   if (gameMode == drawCards) {
-    // Draw cards from the top of the deck (2 each for player and dealer)
+    // Draw cards from the top of the deck
     playerHand.push(shuffledDeck.pop());
     dealerHand.push(shuffledDeck.pop());
     playerHand.push(shuffledDeck.pop());
     dealerHand.push(shuffledDeck.pop());
 
-    // Let player know their cards have been drawn
     myOutputValue = `Your cards have been drawn!<br><br> Click <b>"Submit"</b> to see your results.`;
 
     // Update game mode to Mode 3: Show results
     gameMode = showResults;
+
     return myOutputValue;
   }
 
@@ -470,16 +456,12 @@ var main = function (input) {
 
     // If player enters "Hit"
     if (input == "hit") {
-      // Draw card and let player know it has been drawn
       playerHand.push(shuffledDeck.pop());
+
       outputMsg = "You have drawn another card.<br><br>";
 
-      // Calculate new total hand value
       var playerHandValue = calcHandValues(playerHand);
 
-      // 2 scenarios: //
-
-      // Scenario 1: Player hand value is < 21. Player continues to "hit" or "stand".
       if (playerHandValue < 21) {
         outputMsg =
           outputMsg +
@@ -487,58 +469,65 @@ var main = function (input) {
           '<br>Please input <b>"hit"</b> or <b>"stand"</b>.<br><br>';
       }
 
-      // Scenario 2: Player hand value is >= 21. Player cannot "hit" any more. Game ends.
-      // Tie if player and dealer both got 21 or both busted
-      // Else, the person who gets 21 wins.
-
-      if (playerHandValue >= 21) {
-        // Calculate dealer hand value and draws if < 17
+      if (playerHandValue == 21) {
         var dealerHandValue = calcHandValues(dealerHand);
-        var dealerHandValue = dealerDrawsIfNeeded(dealerHand);
-        outputMsg = outputMsg + `${displayHands(playerHand, dealerHand)}`;
-
-        // Tie if player value is == 21 and dealer value is == 21, OR if both bust.
-        if (playerHandValue == 21 && dealerHandValue == 21) {
-          outputMsg = outputMsg + "<br>It's a tie!";
-          // Update game mode to Mode 4: Game results
-          gameMode = gameResults;
-        } else if (playerHandValue > 21 && dealerHandValue > 21) {
-          outputMsg = outputMsg + "<br>Both bust - it's a tie!";
-          // Update game mode to Mode 4: Game results
-          gameMode = gameResults;
+        // Dealer continues drawing if their hand is below 17
+        while (dealerHandValue < 17) {
+          dealerHand.push(shuffledDeck.pop());
+          dealerHandValue = calcHandValues(dealerHand);
         }
-        // Player wins if == 21 and dealer hand value is not 21 (either < 21 or > 21).
-        else if (playerHandValue == 21) {
-          outputMsg = outputMsg + `<br>Congrats! You win! 🥳`;
-          // Update game mode to Mode 4: Game results
-          gameMode = gameResults;
-        }
-        // Else dealer wins
-        else {
+        if (dealerHandValue == 21) {
           outputMsg =
             outputMsg +
-            `<br> Oops, it's a bust! 🙈 <br><br>Better luck next time!`;
-          // Update game mode to Mode 4: Game results
-          gameMode = gameResults;
+            displayHands(playerHand, dealerHand) +
+            "<br>It's a Blackjack tie!";
+        } else {
+          outputMsg =
+            outputMsg +
+            displayHands(playerHand, dealerHand) +
+            `<br>Congrats! You win by Blackjack! 🥳`;
         }
+        gameMode = gameResults;
+      }
+
+      if (playerHandValue > 21) {
+        var dealerHandValue = calcHandValues(dealerHand);
+        // Dealer continues drawing if their hand is below 17
+        while (dealerHandValue < 17) {
+          dealerHand.push(shuffledDeck.pop());
+          dealerHandValue = calcHandValues(dealerHand);
+        }
+
+        if (dealerHandValue > 21) {
+          outputMsg =
+            outputMsg +
+            displayHands(playerHand, dealerHand) +
+            "<br>Both bust - it's a tie!";
+        } else {
+          outputMsg =
+            outputMsg +
+            displayHands(playerHand, dealerHand) +
+            `<br>Oops, it's a bust! 🙈 <br><br>Better luck next time!`;
+        }
+        gameMode = gameResults;
       }
     }
-
     // If player enters "Stand"
     else if (input == "stand") {
-      // Calculate player hand value
       var playerHandValue = calcHandValues(playerHand);
-
-      // Calculate dealer hand value and draws if < 17
       var dealerHandValue = calcHandValues(dealerHand);
-      var dealerHandValue = dealerDrawsIfNeeded(dealerHand);
+      // Dealer continues drawing if their hand is below 17
+      while (dealerHandValue < 17) {
+        dealerHand.push(shuffledDeck.pop());
+        dealerHandValue = calcHandValues(dealerHand);
+      }
 
       // Calculates if it is a tie (same value or both bust)
       if (
         playerHandValue == dealerHandValue ||
         (playerHandValue > 21 && dealerHandValue > 21)
       ) {
-        outputMsg = `It's a tie!<br><br>${displayHands(
+        outputMsg = `It's a tie!<br><br>Your hand value: ${playerHandValue}<br>Dealer hand value: ${dealerHandValue}<br><br>${displayHands(
           playerHand,
           dealerHand
         )}`;
@@ -548,25 +537,25 @@ var main = function (input) {
         (playerHandValue <= 21 && playerHandValue > dealerHandValue) ||
         (playerHandValue <= 21 && dealerHandValue > 21)
       ) {
-        outputMsg = `You win! 🎉<br><br>${displayHands(
+        outputMsg = `You win! 🎉<br><br>Your hand value: ${playerHandValue}<br>Dealer hand value: ${dealerHandValue}<br><br>${displayHands(
           playerHand,
           dealerHand
         )}`;
       } else
-        outputMsg = `Sorry, the dealer wins.<br><br>${displayHands(
+        outputMsg = `Sorry, the dealer wins. <br><br>Your hand value: ${playerHandValue}<br>Dealer hand value: ${dealerHandValue}<br><br>${displayHands(
           playerHand,
           dealerHand
         )} <br>Better luck next time!`;
 
-      // Update game mode to Mode 5: Game results
       gameMode = gameResults;
     }
 
     return outputMsg;
   }
-  // Mode 5: Game results
+
   if (gameMode == gameResults) {
     myOutputValue = `Game END!`;
   }
+
   return myOutputValue;
 };
