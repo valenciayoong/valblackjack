@@ -463,7 +463,7 @@ var main = function (input) {
   // Mode 4: Hit or Stand
   if (gameMode == hitOrStand) {
     // Input validation (either "hit" or "stand")
-    if (!(input == "hit" || input == "stand")) {
+    if (!(input.toLowerCase() == "hit" || input.toLowerCase() == "stand")) {
       outputMsg = `Please input either <b>"hit"</b> or <b>"stand"</b>. <br><br> ${displayHands(
         playerHand,
         dealerHand
@@ -472,7 +472,7 @@ var main = function (input) {
     }
 
     // If player enters "Hit"
-    if (input == "hit") {
+    if (input.toLowerCase() == "hit") {
       // Draw card and let player know it has been drawn
       playerHand.push(shuffledDeck.pop());
       outputMsg = "You have drawn another card.<br><br>";
@@ -528,7 +528,7 @@ var main = function (input) {
     }
 
     // If player enters "Stand"
-    else if (input == "stand") {
+    else if (input.toLowerCase() == "stand") {
       // Calculate player hand value
       var playerHandValue = calcHandValues(playerHand);
 
