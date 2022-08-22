@@ -551,10 +551,10 @@ var main = function (input) {
         (playerHandValue <= 21 && playerHandValue > dealerHandValue) ||
         (playerHandValue <= 21 && dealerHandValue > 21)
       ) {
-        outputMsg = `You win! 🎉<br><br>${displayHands(
+        outputMsg = `${displayHands(
           playerHand,
           dealerHand
-        )}`;
+        )}<br><br>You win! 🎉`;
       } else
         outputMsg = `Sorry, the dealer wins.<br><br>${displayHands(
           playerHand,
