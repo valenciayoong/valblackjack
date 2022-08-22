@@ -556,10 +556,10 @@ var main = function (input) {
           dealerHand
         )}<br><br>You win! 🎉`;
       } else
-        outputMsg = `Sorry, the dealer wins.<br><br>${displayHands(
+        outputMsg = `${displayHands(
           playerHand,
           dealerHand
-        )} <br>Better luck next time!`;
+        )}<br><br>Sorry, the dealer wins.<br><br>Better luck next time!`;
 
       // Update game mode to Mode 5: Game results
       gameMode = gameResults;
