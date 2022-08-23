@@ -544,7 +544,7 @@ var main = function (input) {
         outputMsg = `${displayHands(
           playerHand,
           dealerHand
-        )}It's a tie!`;
+        )}<br>It's a tie!`;
       }
       // Checks if player or dealer wins
       else if (
@@ -554,7 +554,7 @@ var main = function (input) {
         outputMsg = `${displayHands(
           playerHand,
           dealerHand
-        )}Congrats! You win! 🎉`;
+        )}<br>Congrats! You win! 🎉`;
       } else
         outputMsg = `${displayHands(
           playerHand,
