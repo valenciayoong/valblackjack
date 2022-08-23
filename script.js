@@ -559,7 +559,7 @@ var main = function (input) {
         outputMsg = `${displayHands(
           playerHand,
           dealerHand
-        )}Sorry, the dealer wins.<br><br>Better luck next time!`;
+        )}<br>Sorry, the dealer wins.<br><br>Better luck next time!`;
 
       // Update game mode to Mode 5: Game results
       gameMode = gameResults;
