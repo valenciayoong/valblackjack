@@ -541,10 +541,10 @@ var main = function (input) {
         playerHandValue == dealerHandValue ||
         (playerHandValue > 21 && dealerHandValue > 21)
       ) {
-        outputMsg = `It's a tie!<br><br>${displayHands(
+        outputMsg = `${displayHands(
           playerHand,
           dealerHand
-        )}`;
+        )}It's a tie!`;
       }
       // Checks if player or dealer wins
       else if (
@@ -554,7 +554,7 @@ var main = function (input) {
         outputMsg = `${displayHands(
           playerHand,
           dealerHand
-        )}You win! 🎉`;
+        )}Congrats! You win! 🎉`;
       } else
         outputMsg = `${displayHands(
           playerHand,
