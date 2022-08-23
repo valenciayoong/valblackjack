@@ -475,7 +475,7 @@ var main = function (input) {
     if (input.toLowerCase() == "hit") {
       // Draw card and let player know it has been drawn
       playerHand.push(shuffledDeck.pop());
-      outputMsg = "You have drawn another card.<br><br>";
+      outputMsg = "You draw another card.<br><br>";
 
       // Calculate new total hand value
       var playerHandValue = calcHandValues(playerHand);
@@ -554,12 +554,12 @@ var main = function (input) {
         outputMsg = `${displayHands(
           playerHand,
           dealerHand
-        )}<br>You win! 🎉`;
+        )}You win! 🎉`;
       } else
         outputMsg = `${displayHands(
           playerHand,
           dealerHand
-        )}<br>Sorry, the dealer wins.<br><br>Better luck next time!`;
+        )}Sorry, the dealer wins.<br><br>Better luck next time!`;
 
       // Update game mode to Mode 5: Game results
       gameMode = gameResults;
