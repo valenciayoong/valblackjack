@@ -506,7 +506,7 @@ var main = function (input) {
           // Update game mode to Mode 4: Game results
           gameMode = gameResults;
         } else if (playerHandValue > 21 && dealerHandValue > 21) {
-          outputMsg = outputMsg + "<br>Both bust - it's a tie!";
+          outputMsg = outputMsg + "<br>Both bust – it's a tie!";
           // Update game mode to Mode 4: Game results
           gameMode = gameResults;
         }
