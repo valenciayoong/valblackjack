@@ -1,5 +1,5 @@
 /* 
-This is a simple game of Blackjack.
+This is a simple game of blackjack.
 Rules:
 1. There will be only two players. One human and one computer (for the Base solution).
 2. The computer will always be the dealer.
@@ -371,7 +371,7 @@ var calcHandValues = function (hand) {
   return totalHandValue;
 };
 
-// Function that checks first two cards for Blackjack win
+// Function that checks first two cards for blackjack win
 var checkBlackJack = function (hand) {
   var firstCard = hand[0];
   var secondCard = hand[1];
@@ -407,7 +407,7 @@ var main = function (input) {
 
   // Mode 1: Input username
   if (gameMode == inputUserName) {
-    myOutputValue = `Hi <b>${input}</b>! Hope you're ready for a round of Blackjack!<br><br> Click <b>"Submit"</b> to draw your cards.`;
+    myOutputValue = `Hi <b>${input}</b>! Hope you're ready for a round of blackjack!<br><br> Click <b>"Submit"</b> to draw your cards.`;
     // Update game mode to Mode 2: Draw cards
     gameMode = drawCards;
     return myOutputValue;
@@ -440,21 +440,21 @@ var main = function (input) {
       // 3 scenarios regarding Blackjack wins
 
       if (playerHasBlackJack == true && dealerHasBlackJack == true) {
-        outputMsg = outputMsg + "<br>It's a Blackjack tie!";
+        outputMsg = outputMsg + "<br>It's a blackjack tie!";
       } else if (playerHasBlackJack == true && dealerHasBlackJack == false) {
-        outputMsg = outputMsg + `<br>Congrats! You win by Blackjack! 🥳`;
+        outputMsg = outputMsg + `<br>Congrats! You win by blackjack! 🥳`;
         gameMode = gameResults;
       } else
         outputMsg =
           outputMsg +
-          `<br>Dealer wins by Blackjack.<br><br> Better luck next time!`;
+          `<br>Dealer wins by blackjack.<br><br> Better luck next time!`;
       gameMode = gameResults;
       return outputMsg;
     } else {
       outputMsg = `${displayHands(
         playerHand,
         dealerHand
-      )} <br>There are no Blackjacks. <br><br> To continue, please input <b>"hit"</b> or <b>"stand"</b>.`;
+      )} <br>There are no blackjacks. <br><br> To continue, please input <b>"hit"</b> or <b>"stand"</b>.`;
       gameMode = hitOrStand;
       return outputMsg;
     }
